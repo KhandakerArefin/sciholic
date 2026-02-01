@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SciHolic - Electronics Engineering Tutorials in Bangla</title>
+    <meta name="description" content="SciHolic - Learn Electronics Engineering, Circuit Analysis, Cadence, ModelSim, and Verilog tutorials in Bangla.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #0a0a0f;
+            --dark-card: #1a1a25;
+            --text: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #10b981 100%);
+            --gradient-2: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .bn { font-family: 'Noto Sans Bengali', 'Outfit', sans-serif; }
+        .circuit-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(var(--primary) 1px, transparent 1px),
+                linear-gradient(90deg, var(--primary) 1px, transparent 1px);
+            background-size: 100px 100px;
+        }
+        .bg-orbs {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .orb-1 { width: 600px; height: 600px; background: rgba(0, 212, 255, 0.08); top: -200px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: rgba(16, 185, 129, 0.08); bottom: -150px; right: -150px; animation-delay: -7s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        nav.scrolled {
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 0.75rem 5%;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        .logo-text span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta { display: flex; align-items: center; gap: 1rem; }
+        .lang-btn {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Sans Bengali', 'Outfit', sans-serif;
+        }
+        .lang-btn:hover {
+            background: rgba(245, 158, 11, 0.25);
+            transform: scale(1.05);
+        }
+        .lang-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        .subscribe-btn {
+            background: var(--gradient-1);
+            color: var(--dark);
+            padding: 0.65rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+        .subscribe-btn svg { width: 18px; height: 18px; }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px; height: 2px;
+            background: var(--text);
+            margin: 5px 0;
+            border-radius: 2px;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+        }
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .hero-content { animation: fadeInLeft 1s ease; }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .hero-badges {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+        .hero-badge.bangla {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.25);
+            color: var(--accent);
+        }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 .highlight {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero h1 .highlight-2 {
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 540px;
+        }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--gradient-1);
+            color: var(--dark);
+            padding: 0.9rem 1.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.35);
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            padding: 0.9rem 1.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .hero-visual {
+            position: relative;
+            animation: fadeInRight 1s ease 0.2s both;
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .featured-video {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .featured-video iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: block;
+        }
+        .stats-bar {
+            background: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem 3rem;
+            margin: -3rem auto 0;
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        section { padding: 6rem 5%; }
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+        .section-tag {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .topic-card {
+            background: var(--dark-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s;
+        }
+        .topic-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+        .topic-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            background: rgba(0, 212, 255, 0.15);
+        }
+        .topic-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .topic-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .topic-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .topic-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .video-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            color: var(--text);
+        }
+        .video-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .video-thumbnail {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #12121a;
+            overflow: hidden;
+        }
+        .video-thumbnail img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        .video-card:hover .video-thumbnail img { transform: scale(1.05); }
+        .video-duration {
+            position: absolute;
+            bottom: 8px; right: 8px;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .video-card:hover .play-overlay { opacity: 1; }
+        .play-btn {
+            width: 64px; height: 64px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+        .video-card:hover .play-btn { transform: scale(1); }
+        .play-btn svg { width: 24px; height: 24px; fill: var(--dark); margin-left: 3px; }
+        .video-info { padding: 1.25rem; }
+        .video-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .video-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .view-all-btn { text-align: center; margin-top: 3rem; }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-image-wrapper {
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--gradient-1);
+            padding: 3px;
+        }
+        .about-image-inner {
+            background: var(--dark-card);
+            border-radius: 18px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .about-logo { font-size: 5rem; margin-bottom: 1.5rem; }
+        .about-brand {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        .about-brand span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .about-tagline { color: var(--text-muted); margin-top: 0.5rem; }
+        .about-content h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .about-content p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+        }
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--dark-card);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .feature-icon {
+            width: 42px; height: 42px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .feature-text { font-weight: 500; font-size: 0.9rem; }
+        .cta { text-align: center; padding: 5rem 5%; }
+        .cta-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--dark-card);
+            padding: 3.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .cta-icon { font-size: 3rem; margin-bottom: 1.5rem; }
+        .cta h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .cta p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .social-link {
+            width: 50px; height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.3rem;
+        }
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        .social-link.youtube:hover { background: #ff0000; color: white; }
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .footer-logo span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .footer-text { color: var(--text-muted); font-size: 0.9rem; }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--primary); }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Language transition */
+        [data-en], [data-bn] {
+            transition: opacity 0.3s ease;
+        }
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            .hero-content { order: 2; }
+            .hero-visual { order: 1; max-width: 600px; margin: 0 auto; }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero-buttons { justify-content: center; }
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .about-visual { max-width: 400px; margin: 0 auto; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 1.5rem;
+                margin-top: -2rem;
+            }
+            .about-features { grid-template-columns: 1fr; }
+            section { padding: 4rem 5%; }
+        }
+        @media (max-width: 480px) {
+            .hero-badges { justify-content: center; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .stats-bar { grid-template-columns: 1fr; gap: 1.5rem; }
+            .cta-card { padding: 2rem; }
+            .nav-cta .subscribe-btn span { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="circuit-bg"></div>
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <nav id="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">⚡</div>
+            <div class="logo-text">Sci<span>Holic</span></div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home" data-en="Home" data-bn="হোম">Home</a></li>
+            <li><a href="#topics" data-en="Topics" data-bn="বিষয়সমূহ">Topics</a></li>
+            <li><a href="#videos" data-en="Videos" data-bn="ভিডিও">Videos</a></li>
+            <li><a href="#about" data-en="About" data-bn="আমাদের সম্পর্কে">About</a></li>
+        </ul>
+        <div class="nav-cta">
+            <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">বাংলা</button>
+            <a href="https://www.youtube.com/channel/UCR56lkgrEpWix4WKfSeHHgw?sub_confirmation=1" target="_blank" class="subscribe-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                    <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#0a0a0f"/>
+                </svg>
+                <span data-en="Subscribe" data-bn="সাবস্ক্রাইব">Subscribe</span>
+            </a>
+        </div>
+        <button class="mobile-menu-btn" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badges">
+                    <span class="hero-badge" data-en="⚡ Electronics Engineering" data-bn="⚡ ইলেকট্রনিক্স ইঞ্জিনিয়ারিং">⚡ Electronics Engineering</span>
+                    <span class="hero-badge bangla" data-en="🇧🇩 Learn in Bangla" data-bn="🇧🇩 বাংলায় শিখুন">🇧🇩 বাংলায় শিখুন</span>
+                </div>
+                <h1>
+                    <span data-en="Learn " data-bn="শিখুন ">Learn </span>
+                    <span class="highlight" data-en="Electronics" data-bn="ইলেকট্রনিক্স">Electronics</span>
+                    <span data-en=" & " data-bn=" এবং "> & </span>
+                    <span class="highlight-2" data-en="Circuit Design" data-bn="সার্কিট ডিজাইন">Circuit Design</span>
+                    <span data-en=" in Bangla" data-bn=" বাংলায়"> in Bangla</span>
+                </h1>
+                <p data-en="Master Cadence, ModelSim, Verilog, and circuit analysis with easy-to-follow tutorials. From basic concepts to advanced simulations—all explained in Bangla." data-bn="সহজ টিউটোরিয়ালের মাধ্যমে Cadence, ModelSim, Verilog এবং সার্কিট অ্যানালাইসিস শিখুন। বেসিক কনসেপ্ট থেকে অ্যাডভান্সড সিমুলেশন—সব বাংলায় ব্যাখ্যা করা হয়েছে।">Master Cadence, ModelSim, Verilog, and circuit analysis with easy-to-follow tutorials. From basic concepts to advanced simulations—all explained in Bangla.</p>
+                <div class="hero-buttons">
+                    <a href="https://www.youtube.com/channel/UCR56lkgrEpWix4WKfSeHHgw?sub_confirmation=1" target="_blank" class="btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                            <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#0a0a0f"/>
+                        </svg>
+                        <span data-en="Subscribe Now" data-bn="এখনই সাবস্ক্রাইব করুন">Subscribe Now</span>
+                    </a>
+                    <a href="#videos" class="btn-secondary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <span data-en="Watch Videos" data-bn="ভিডিও দেখুন">Watch Videos</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="featured-video">
+                    <iframe src="https://www.youtube.com/embed/290jDtWd37Y" title="SciHolic Featured Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">19</div>
+            <div class="stat-label" data-en="Video Tutorials" data-bn="ভিডিও টিউটোরিয়াল">Video Tutorials</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">326</div>
+            <div class="stat-label" data-en="Subscribers" data-bn="সাবস্ক্রাইবার">Subscribers</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">37K+</div>
+            <div class="stat-label" data-en="Total Views" data-bn="মোট ভিউ">Total Views</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">6+</div>
+            <div class="stat-label" data-en="Years Active" data-bn="বছর সক্রিয়">Years Active</div>
+        </div>
+    </div>
+
+    <section class="topics" id="topics">
+        <div class="section-header reveal">
+            <span class="section-tag" data-en="📚 What You'll Learn" data-bn="📚 যা শিখবেন">📚 What You'll Learn</span>
+            <h2 class="section-title" data-en="Our Tutorial Topics" data-bn="আমাদের টিউটোরিয়াল বিষয়সমূহ">Our Tutorial Topics</h2>
+            <p class="section-desc" data-en="Comprehensive electronics engineering tutorials covering industry-standard tools" data-bn="ইন্ডাস্ট্রি-স্ট্যান্ডার্ড টুলস কভার করে বিস্তারিত ইলেকট্রনিক্স ইঞ্জিনিয়ারিং টিউটোরিয়াল">Comprehensive electronics engineering tutorials covering industry-standard tools</p>
+        </div>
+        <div class="topics-grid">
+            <div class="topic-card reveal">
+                <div class="topic-icon">🔧</div>
+                <h3 data-en="Cadence Virtuoso" data-bn="ক্যাডেন্স ভার্চুওসো">Cadence Virtuoso</h3>
+                <p data-en="Learn schematic design, library creation, DC/parametric sweeps, and inverter design using Cadence tools." data-bn="Cadence টুলস ব্যবহার করে স্কিম্যাটিক ডিজাইন, লাইব্রেরি তৈরি, DC/প্যারামেট্রিক সুইপ এবং ইনভার্টার ডিজাইন শিখুন।">Learn schematic design, library creation, DC/parametric sweeps, and inverter design using Cadence tools.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">DC Sweep</span>
+                    <span class="topic-tag">Schematic</span>
+                    <span class="topic-tag">Library</span>
+                </div>
+            </div>
+            <div class="topic-card reveal">
+                <div class="topic-icon">💻</div>
+                <h3 data-en="ModelSim & Verilog" data-bn="মডেলসিম এবং ভেরিলগ">ModelSim & Verilog</h3>
+                <p data-en="Master digital simulation with ModelSim. Learn Verilog HDL coding and testbench development." data-bn="ModelSim দিয়ে ডিজিটাল সিমুলেশন আয়ত্ত করুন। Verilog HDL কোডিং এবং টেস্টবেঞ্চ ডেভেলপমেন্ট শিখুন।">Master digital simulation with ModelSim. Learn Verilog HDL coding and testbench development.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Verilog</span>
+                    <span class="topic-tag">Testbench</span>
+                    <span class="topic-tag">Simulation</span>
+                </div>
+            </div>
+            <div class="topic-card reveal">
+                <div class="topic-icon">⚡</div>
+                <h3 data-en="Circuit Analysis" data-bn="সার্কিট অ্যানালাইসিস">Circuit Analysis</h3>
+                <p data-en="Understand Kirchhoff's laws, mesh analysis, Y-Delta conversion, and power calculations." data-bn="কার্শফের সূত্র, মেশ অ্যানালাইসিস, Y-ডেল্টা কনভার্শন এবং পাওয়ার ক্যালকুলেশন বুঝুন।">Understand Kirchhoff's laws, mesh analysis, Y-Delta conversion, and power calculations.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">KCL/KVL</span>
+                    <span class="topic-tag">Mesh</span>
+                    <span class="topic-tag">Y-Delta</span>
+                </div>
+            </div>
+            <div class="topic-card reveal">
+                <div class="topic-icon">📊</div>
+                <h3 data-en="Signal Analysis" data-bn="সিগন্যাল অ্যানালাইসিস">Signal Analysis</h3>
+                <p data-en="Calculate propagation delay, rise time, fall time, and analyze signal characteristics." data-bn="প্রোপাগেশন ডিলে, রাইজ টাইম, ফল টাইম ক্যালকুলেট করুন এবং সিগন্যাল বৈশিষ্ট্য বিশ্লেষণ করুন।">Calculate propagation delay, rise time, fall time, and analyze signal characteristics.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Delay</span>
+                    <span class="topic-tag">Rise Time</span>
+                    <span class="topic-tag">Fall Time</span>
+                </div>
+            </div>
+            <div class="topic-card reveal">
+                <div class="topic-icon">🔌</div>
+                <h3 data-en="Power Electronics" data-bn="পাওয়ার ইলেকট্রনিক্স">Power Electronics</h3>
+                <p data-en="Introduction to power electronics concepts, average power calculations, and applications." data-bn="পাওয়ার ইলেকট্রনিক্স কনসেপ্ট, গড় পাওয়ার গণনা এবং অ্যাপ্লিকেশনের পরিচিতি।">Introduction to power electronics concepts, average power calculations, and applications.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Power</span>
+                    <span class="topic-tag">Efficiency</span>
+                    <span class="topic-tag">Analysis</span>
+                </div>
+            </div>
+            <div class="topic-card reveal">
+                <div class="topic-icon">🧬</div>
+                <h3 data-en="Science & Biology" data-bn="বিজ্ঞান এবং জীববিদ্যা">Science & Biology</h3>
+                <p data-en="Explore interesting science topics like aging, biology, and scientific concepts in Bangla." data-bn="বার্ধক্য, জীববিদ্যা এবং বৈজ্ঞানিক ধারণার মতো আকর্ষণীয় বিজ্ঞান বিষয় বাংলায় জানুন।">Explore interesting science topics like aging, biology, and scientific concepts in Bangla.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Biology</span>
+                    <span class="topic-tag">Science</span>
+                    <span class="topic-tag">Facts</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="videos" id="videos">
+        <div class="section-header reveal">
+            <span class="section-tag" data-en="🎬 Latest Tutorials" data-bn="🎬 সর্বশেষ টিউটোরিয়াল">🎬 Latest Tutorials</span>
+            <h2 class="section-title" data-en="Popular Videos" data-bn="জনপ্রিয় ভিডিও">Popular Videos</h2>
+            <p class="section-desc" data-en="Watch our most popular tutorials and start learning today" data-bn="আমাদের সবচেয়ে জনপ্রিয় টিউটোরিয়াল দেখুন এবং আজই শেখা শুরু করুন">Watch our most popular tutorials and start learning today</p>
+        </div>
+        <div class="video-grid">
+            <a href="https://www.youtube.com/watch?v=290jDtWd37Y" target="_blank" class="video-card reveal">
+                <div class="video-thumbnail">
+                    <img src="https://img.youtube.com/vi/290jDtWd37Y/maxresdefault.jpg" alt="Cadence Tutorial" loading="lazy">
+                    <span class="video-duration">4:24</span>
+                    <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                </div>
+                <div class="video-info">
+                    <h3>Cadence: How to Calculate Average Power | BANGLA</h3>
+                    <div class="video-meta"><span>5.7K views</span><span>Feb 2021</span></div>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=BKOPdnTBKCU" target="_blank" class="video-card reveal">
+                <div class="video-thumbnail">
+                    <img src="https://img.youtube.com/vi/BKOPdnTBKCU/maxresdefault.jpg" alt="Library Tutorial" loading="lazy">
+                    <span class="video-duration">9:39</span>
+                    <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                </div>
+                <div class="video-info">
+                    <h3>Cadence: Creating Library and Inverter Schematic | Bangla</h3>
+                    <div class="video-meta"><span>4K views</span><span>Jun 2021</span></div>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=hjrBkD4yT9I" target="_blank" class="video-card reveal">
+                <div class="video-thumbnail">
+                    <img src="https://img.youtube.com/vi/hjrBkD4yT9I/maxresdefault.jpg" alt="Propagation Delay" loading="lazy">
+                    <span class="video-duration">18:34</span>
+                    <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                </div>
+                <div class="video-info">
+                    <h3>Cadence: Calculate Propagation Delay, Rise & Fall Time</h3>
+                    <div class="video-meta"><span>5.7K views</span><span>Jan 2021</span></div>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=RpP1bpRXJLM" target="_blank" class="video-card reveal">
+                <div class="video-thumbnail">
+                    <img src="https://img.youtube.com/vi/RpP1bpRXJLM/maxresdefault.jpg" alt="ModelSim Tutorial" loading="lazy">
+                    <span class="video-duration">19:17</span>
+                    <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                </div>
+                <div class="video-info">
+                    <h3>ModelSim: OR Gate Verilog Simulation with Test Bench</h3>
+                    <div class="video-meta"><span>2.2K views</span><span>Jan 2021</span></div>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=qBjuZr-1Poc" target="_blank" class="video-card reveal">
+                <div class="video-thumbnail">
+                    <img src="https://img.youtube.com/vi/qBjuZr-1Poc/maxresdefault.jpg" alt="KCL Tutorial" loading="lazy">
+                    <span class="video-duration">2:08</span>
+                    <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                </div>
+                <div class="video-info">
+                    <h3>Kirchhoff's Current Law (KCL) | Bangla</h3>
+                    <div class="video-meta"><span>135 views</span><span>Feb 2020</span></div>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=Suete3XeqYM" target="_blank" class="video-card reveal">
+                <div class="video-thumbnail">
+                    <img src="https://img.youtube.com/vi/Suete3XeqYM/maxresdefault.jpg" alt="Y Delta Tutorial" loading="lazy">
+                    <span class="video-duration">3:15</span>
+                    <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                </div>
+                <div class="video-info">
+                    <h3>Y Delta Conversion Part 1 | Bangla</h3>
+                    <div class="video-meta"><span>41 views</span><span>May 2020</span></div>
+                </div>
+            </a>
+        </div>
+        <div class="view-all-btn reveal">
+            <a href="https://www.youtube.com/channel/UCR56lkgrEpWix4WKfSeHHgw/videos" target="_blank" class="btn-secondary">
+                <span data-en="View All Videos" data-bn="সব ভিডিও দেখুন">View All Videos</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-grid">
+            <div class="about-visual reveal">
+                <div class="about-image-wrapper">
+                    <div class="about-image-inner">
+                        <div class="about-logo">⚡</div>
+                        <div class="about-brand">Sci<span>Holic</span></div>
+                        <div class="about-tagline" data-en="Science + Addicted = SciHolic" data-bn="বিজ্ঞান + আসক্ত = SciHolic">Science + Addicted = SciHolic</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-content reveal">
+                <span class="section-tag" data-en="🎯 About Us" data-bn="🎯 আমাদের সম্পর্কে">🎯 About Us</span>
+                <h2 data-en="Making Electronics Engineering Accessible in Bangla" data-bn="বাংলায় ইলেকট্রনিক্স ইঞ্জিনিয়ারিং সহজলভ্য করা">Making Electronics Engineering Accessible in Bangla</h2>
+                <p><strong>SciHolic</strong> <span data-en="was created with a simple mission: to provide quality electronics engineering education in Bangla for students who want to learn industry-standard tools." data-bn="একটি সহজ মিশন নিয়ে তৈরি করা হয়েছিল: যারা ইন্ডাস্ট্রি-স্ট্যান্ডার্ড টুলস শিখতে চান তাদের জন্য বাংলায় মানসম্পন্ন ইলেকট্রনিক্স ইঞ্জিনিয়ারিং শিক্ষা প্রদান করা।">was created with a simple mission: to provide quality electronics engineering education in Bangla for students who want to learn industry-standard tools.</span></p>
+                <p data-en="Since 2018, we've been creating tutorials on Cadence, ModelSim, Verilog, and circuit analysis—topics that are often difficult to find in Bangla. Our goal is to bridge the language gap." data-bn="২০১৮ সাল থেকে, আমরা Cadence, ModelSim, Verilog এবং সার্কিট অ্যানালাইসিস-এর উপর টিউটোরিয়াল তৈরি করছি—এমন বিষয় যা বাংলায় খুঁজে পাওয়া কঠিন। আমাদের লক্ষ্য হল ভাষার ব্যবধান দূর করা।">Since 2018, we've been creating tutorials on Cadence, ModelSim, Verilog, and circuit analysis—topics that are often difficult to find in Bangla. Our goal is to bridge the language gap.</p>
+                <div class="about-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <span class="feature-text" data-en="Clear Step-by-Step Tutorials" data-bn="স্পষ্ট ধাপে ধাপে টিউটোরিয়াল">Clear Step-by-Step Tutorials</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🇧🇩</div>
+                        <span class="feature-text" data-en="100% Bangla Content" data-bn="১০০% বাংলা কন্টেন্ট">100% Bangla Content</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <span class="feature-text" data-en="Industry-Standard Tools" data-bn="ইন্ডাস্ট্রি-স্ট্যান্ডার্ড টুলস">Industry-Standard Tools</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📈</div>
+                        <span class="feature-text" data-en="Practical Examples" data-bn="ব্যবহারিক উদাহরণ">Practical Examples</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-card reveal">
+            <div class="cta-icon">🚀</div>
+            <h2 data-en="Start Learning Today!" data-bn="আজই শেখা শুরু করুন!">Start Learning Today!</h2>
+            <p data-en="Subscribe to SciHolic and join hundreds of students learning electronics engineering in Bangla." data-bn="SciHolic-এ সাবস্ক্রাইব করুন এবং বাংলায় ইলেকট্রনিক্স ইঞ্জিনিয়ারিং শিখছে এমন শত শত শিক্ষার্থীদের সাথে যোগ দিন।">Subscribe to SciHolic and join hundreds of students learning electronics engineering in Bangla.</p>
+            <a href="https://www.youtube.com/channel/UCR56lkgrEpWix4WKfSeHHgw?sub_confirmation=1" target="_blank" class="btn-primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                    <path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#0a0a0f"/>
+                </svg>
+                <span data-en="Subscribe on YouTube" data-bn="ইউটিউবে সাবস্ক্রাইব করুন">Subscribe on YouTube</span>
+            </a>
+            <div class="social-links">
+                <a href="https://www.youtube.com/channel/UCR56lkgrEpWix4WKfSeHHgw" target="_blank" class="social-link youtube" title="YouTube">📺</a>
+                <a href="mailto:contact@sciholic.com" class="social-link" title="Email">✉️</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">⚡ Sci<span>Holic</span></div>
+        <p class="footer-text" data-en="Electronics Engineering Tutorials in Bangla" data-bn="বাংলায় ইলেকট্রনিক্স ইঞ্জিনিয়ারিং টিউটোরিয়াল">Electronics Engineering Tutorials in Bangla</p>
+        <p class="footer-text" style="margin-top: 0.5rem; opacity: 0.6;" data-en="© 2025 SciHolic. Making engineering education accessible." data-bn="© ২০২৫ SciHolic। ইঞ্জিনিয়ারিং শিক্ষা সহজলভ্য করা।">© 2025 SciHolic. Making engineering education accessible.</p>
+        <div class="footer-links">
+            <a href="https://www.youtube.com/channel/UCR56lkgrEpWix4WKfSeHHgw" target="_blank">YouTube</a>
+            <a href="#videos" data-en="Videos" data-bn="ভিডিও">Videos</a>
+            <a href="#topics" data-en="Topics" data-bn="বিষয়সমূহ">Topics</a>
+            <a href="#about" data-en="About" data-bn="সম্পর্কে">About</a>
+        </div>
+    </footer>
+
+    <script>
+        // Language toggle functionality
+        let currentLang = 'en';
+        
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'bn' : 'en';
+            const langBtn = document.getElementById('langToggle');
+            
+            // Update button text and style
+            if (currentLang === 'bn') {
+                langBtn.textContent = 'English';
+                langBtn.classList.add('active');
+            } else {
+                langBtn.textContent = 'বাংলা';
+                langBtn.classList.remove('active');
+            }
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-en][data-bn]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) {
+                    el.textContent = text;
+                }
+            });
+            
+            // Add Bangla font class to body when in Bangla mode
+            if (currentLang === 'bn') {
+                document.body.classList.add('bn');
+            } else {
+                document.body.classList.remove('bn');
+            }
+            
+            // Save preference
+            localStorage.setItem('sciholic-lang', currentLang);
+        }
+        
+        // Load saved language preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('sciholic-lang');
+            if (savedLang === 'bn') {
+                toggleLanguage();
+            }
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        function revealOnScroll() {
+            reveals.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 150) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = navbar.offsetHeight;
+                    window.scrollTo({
+                        top: target.getBoundingClientRect().top + window.pageYOffset - navHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
